@@ -44,3 +44,8 @@ Reading yml file in blender
 
         delete !!opencv-matrix and %YAML:1.0 ---
         it loads
+
+Read pairs of 3 data and create cubes as vertices
+
+Create good topology faces from the vertices
+
