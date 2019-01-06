@@ -1,0 +1,46 @@
+1/5
+
+fbx file is complex and needs Blender or Maya to generate it
+Decide to use Blender because of its accessibility
+
+Lean Blendshape in Blender
+    Create a base shape
+    Shape Keys -> add
+    Edit the shape
+
+Create git repo
+
+Use yaml in blender python
+    Needs yaml module to read yaml file
+    python in blender is independent and needs to install py_yaml in
+    /Applications/blender.app/Contents/Resources/2.79/python/lib/python3.5
+
+    pip install pyyaml -t .
+    in the directory
+
+Start blender from terminal to see output the log (output)
+
+Reading yml file in blender
+    current directory in blender python is python in blender, not where current project is at
+
+    filepath = bpy.data.filepath
+    directory = os.path.dirname(filepath)
+    print(directory+'/facelandmarks.yml')
+
+    to get the current project directory
+
+    Scan error with facelandmarks.yml
+        simple yaml file opens
+        yml or yaml doesn't matter
+
+        %YAML:1.0
+        ---
+
+        !!opencv-matrix
+
+        tabs 
+
+        causing error
+
+        delete !!opencv-matrix and %YAML:1.0 ---
+        it loads
