@@ -4,7 +4,7 @@ import os
 
 filepath = bpy.data.filepath
 directory = os.path.dirname(filepath)
-fileDir = directory+'/facelandmarks.yml'
+fileDir = directory+'/data/facelandmarks.yml'
 print(fileDir)
 
 
@@ -15,10 +15,15 @@ vertices = []
 with open(fileDir) as file:
     obj = yaml.safe_load(file)
     
+    zero_x = (obj['Point3f']['data'][21*3] + obj['Point3f']['data'][22*3]) / 2.0
+    zero_y = (obj['Point3f']['data'][21*3+1] + obj['Point3f']['data'][22*3+1]) / 2.0
+    zero_z = (obj['Point3f']['data'][21*3+2] + obj['Point3f']['data'][22*3+2]) / 2.0
+    
+    
     for i in range(0, 77, 1):
-        x = obj['Point3f']['data'][i*3]
-        y = obj['Point3f']['data'][i*3+1]
-        z = obj['Point3f']['data'][i*3+2]
+        x = obj['Point3f']['data'][i*3] - zero_x
+        y = obj['Point3f']['data'][i*3+1] - zero_y
+        z = obj['Point3f']['data'][i*3+2] - zero_z
         
         vertices.append([x*0.4,y*0.4,z*0.4])
         
@@ -81,4 +86,34 @@ scene = bpy.context.scene
 scene.objects.link(obj)
 
         
+fileDir = directory+'/data/facelandmarks_kris.yml'
+print(fileDir)
+
+
+print("reading yaml file")
+
+vertices = []
+
+with open(fileDir) as file:
+    obj = yaml.safe_load(file)
+    
+    zero_x = (obj['Point3f']['data'][21*3] + obj['Point3f']['data'][22*3]) / 2.0
+    zero_y = (obj['Point3f']['data'][21*3+1] + obj['Point3f']['data'][22*3+1]) / 2.0
+    zero_z = (obj['Point3f']['data'][21*3+2] + obj['Point3f']['data'][22*3+2]) / 2.0
+    
+    for i in range(0, 77, 1):
+        x = obj['Point3f']['data'][i*3] - zero_x
+        y = obj['Point3f']['data'][i*3+1] - zero_y
+        z = obj['Point3f']['data'][i*3+2] - zero_z
         
+        vertices.append([x*0.4,y*0.4,z*0.4])
+        
+print("vertices")
+print(vertices)
+
+mesh = bpy.data.meshes.new("faceMesh")
+mesh.from_pydata(vertices,[],faces)
+mesh.update()
+obj = bpy.data.objects.new("face2",mesh)
+scene = bpy.context.scene
+scene.objects.link(obj)
