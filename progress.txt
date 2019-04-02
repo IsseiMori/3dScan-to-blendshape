@@ -49,3 +49,27 @@ Read pairs of 3 data and create cubes as vertices
 
 Create good topology faces from the vertices
 
+Blendshape the faces with a common texture
+
+Blendshape textures
+    Texture -> Diffuse -> Color can merge multiple textures
+
+    ISSUE: What is 50%?
+        50% of a face with wrinkles and no wrinkles is 50% transparency wrinkles
+        then what is 50% of an eye at position A and B? not half A and half B. It's between AB
+        -> this maybe not a problem if UVs are correctly morphed
+
+UVs are not blendshaping SOLVE THIS
+    Aligned textures from sasi shares the same UVs
+    Use Hoi's UV for everything
+
+
+Mixing multiple textures
+    Node editor MixShader with two ImageTexture
+
+Linking ShapeKey and MixShader value
+    Add driver to shapeKey
+    In Graph editor, link the path of MixShader value
+
+Driver value not updated instantly
+    launch blender --enable-new-depsgraph
