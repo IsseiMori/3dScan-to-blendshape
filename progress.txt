@@ -73,3 +73,6 @@ Linking ShapeKey and MixShader value
 
 Driver value not updated instantly
     launch blender --enable-new-depsgraph
+
+Smooth Shading
+    edit mode->mesh->faces->shade smooth

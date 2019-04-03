@@ -1,16 +1,18 @@
 import yaml
 import bpy
 import os
+import random
 
 filepath = bpy.data.filepath
 directory = os.path.dirname(filepath)
-fileDir = directory+'/data/facelandmarks.yml'
+fileDir = directory+'/data/facelandmarks_ke.yml'
 print(fileDir)
 
 
 print("reading yaml file")
 
 vertices = []
+uv = []
 
 with open(fileDir) as file:
     obj = yaml.safe_load(file)
@@ -26,6 +28,11 @@ with open(fileDir) as file:
         z = obj['Point3f']['data'][i*3+2] - zero_z
         
         vertices.append([x*0.4,y*0.4,z*0.4])
+        
+        u = obj['Point2f']['data'][i*2]
+        v = obj['Point2f']['data'][i*2+1]
+        
+        uv.append([u,v])
         
 print("vertices")
 print(vertices)
@@ -80,6 +87,16 @@ faces = [[11,12,44],[11,44,45],[11,45,46],
 
 mesh = bpy.data.meshes.new("faceMesh")
 mesh.from_pydata(vertices,[],faces)
+
+uvtex = mesh.uv_textures.new()
+uvtex.name = "UV Name"
+for ly in mesh.uv_textures:
+    i = 0
+    for idx, dat in enumerate(mesh.uv_layers[ly.name].data):
+        vertIdx = faces[(int)(i/3)][i%3]
+        dat.uv = [uv[vertIdx][0] / 4096, -uv[vertIdx][1] / 2048]
+        i += 1
+
 mesh.update()
 obj = bpy.data.objects.new("face",mesh)
 scene = bpy.context.scene
@@ -93,6 +110,7 @@ print(fileDir)
 print("reading yaml file")
 
 vertices = []
+uv = []
 
 with open(fileDir) as file:
     obj = yaml.safe_load(file)
@@ -108,11 +126,28 @@ with open(fileDir) as file:
         
         vertices.append([x*0.4,y*0.4,z*0.4])
         
+        u = obj['Point2f']['data'][i*2]
+        v = obj['Point2f']['data'][i*2+1]
+        
+        uv.append([u,v])
+        
+        
 print("vertices")
 print(vertices)
 
 mesh = bpy.data.meshes.new("faceMesh")
 mesh.from_pydata(vertices,[],faces)
+
+uvtex = mesh.uv_textures.new()
+uvtex.name = "UV Name"
+for ly in mesh.uv_textures:
+    i = 0
+    for idx, dat in enumerate(mesh.uv_layers[ly.name].data):
+        vertIdx = faces[(int)(i/3)][i%3]
+        dat.uv = [uv[vertIdx][0] / 4096, -uv[vertIdx][1] / 2048]
+        i += 1
+
+
 mesh.update()
 obj = bpy.data.objects.new("face2",mesh)
 scene = bpy.context.scene
