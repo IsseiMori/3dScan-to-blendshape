@@ -76,3 +76,47 @@ Driver value not updated instantly
 
 Smooth Shading
     edit mode->mesh->faces->shade smooth
+
+
+*** Instructions ***
+Scan face using Bellus 3D Face Camera
+Find data in C:/ProgramData
+
+python faceMorph.py -i base -o target
+convert
+    |- tri.txt
+    |- base
+        |- facelandmark.yml 
+        |- base/head3d.jpg
+    |- target
+        |- facelandmark.yml
+        |- target/head3d.jpg
+
+delete unwanted lines from landmark.yml
+
+Run blendshape.py on blender to construct face meshes
+
+Select base and add shape key
+Select others and add as shapes
+
+Material Shader
+Open Node editor
+add new material
+delete everything except for the output
+add Principled BSDF and Image texture, load image
+group them together
+duplicate the group
+click "1" to unable instance
+connect two with Mixshader
+connect the mixshader and a group with Mixshader
+group all and give a property name
+
+Driver
+Set a driver to all the shape key values
+Graph Editor -> Key: Drivers
+Drivers tab -> Type: Sum Values
+Driver type: single property
+Prop: Node tree -> select the shader
+Path: nodes["mix-shader-property-name-here"].inputs[0].default_value
+
+
