@@ -82,7 +82,7 @@ Smooth Shading
 Scan face using Bellus 3D Face Camera
 Find data in C:/ProgramData
 
-python faceMorph.py -i base -o target
+python faceMorph.py -i target -o base
 convert
     |- tri.txt
     |- base
@@ -101,6 +101,7 @@ Select others and add as shapes
 
 Material Shader
 Open Node editor
+Change to Cycles Render
 add new material
 delete everything except for the output
 add Principled BSDF and Image texture, load image
